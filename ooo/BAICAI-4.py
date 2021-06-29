@@ -376,7 +376,7 @@ def start():
        watch('bd_bd',bdlist)
        watch('bd_task',taskidlist)
        taskidlist=s(taskidlist)
-       hd['Cookie']=btlist[3]
+       hd['Cookie']=btlist[0]
        BD()
    print('🏆🏆🏆🏆运行完毕')
   # print(result)
