@@ -11,7 +11,9 @@ from datetime import datetime
 from dateutil import tz
 import gzip
 import os
-#2021.6.29源码测试，#网址后面的信息，防止作弊，地理位置
+requests.packages.urllib3.disable_warnings()
+
+
 Gamename='ShiQi_Story'
 osenviron={}
 IDARY=[]
@@ -26,6 +28,7 @@ with_bd=''
 tm_bd=''
 yuan1_bd=''
 bubble_bd=''
+amount_bd=''
 
 tmlong=1
 
@@ -36,7 +39,7 @@ with_bdlist=[]
 tm_bdlist=[]
 yuan1_bdlist=[]
 bubble_bdlist=[]
-
+amount_bdlist=[]
 
 djj_tele_cookie=''
 header={"Accept": "application/json, text/plain, */*","Accept-Encoding": "gzip, deflate, br","Accept-Language": "zh-cn","Connection": "keep-alive","Content-Type": "application/x-www-form-urlencoded","User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/18D52 AliApp(shuqi/4.3.6.0) WindVane/8.6.1 Shuqi (iPhone11,8__shuqi__v4.3.6.0) 828x1792 Winding(WV_19) WK",}
@@ -62,7 +65,7 @@ def boxTask():
    try:
      msg=''
 
-     response = requests.get('https://ocean.shuqireader.com/api/activity/v1/activity/boxTask?activityId=309&appVer=4.3.6.0&placeId=111111&ver=210301&platform=1&userId='+userId,headers=header)
+     response = requests.get('https://ocean.shuqireader.com/api/activity/v1/activity/boxTask?activityId=309&appVer=4.3.6.0&placeId=111111&ver=210301&platform=1&userId='+userId,headers=header,verify=False)
      Res=response.json()
      print(Res['message'])
      if Res['status']=='200':
@@ -80,7 +83,7 @@ def getsign():
      msg=''
      if(sign_bd=='xxx'):
        return 
-     response = requests.post('https://ocean.shuqireader.com/api/activity/xapi/signin/v5/signInAction',headers=header,data=sign_bd)
+     response = requests.post('https://ocean.shuqireader.com/api/activity/xapi/signin/v5/signInAction',headers=header,data=sign_bd,verify=False)
      Res=response.json()
      print(Res['message'])
      
@@ -93,7 +96,7 @@ def draw():
    try:
      msg=''
 
-     response = requests.post('https://ocean.shuqireader.com/api/activity/activity/v1/lottery/draw?asac=2A20C07RJ9F51AOEFSNHDR',headers=header,data=draw_bd)
+     response = requests.post('https://ocean.shuqireader.com/api/activity/activity/v1/lottery/draw?asac=2A20C07RJ9F51AOEFSNHDR',headers=header,data=draw_bd,verify=False)
      Res=response.json()
      print(Res['message'])
      
@@ -107,7 +110,7 @@ def lottery_10():
    try:
      msg=''
 
-     response = requests.post('https://ocean.shuqireader.com/api/ad/v1/api/prize/lottery',headers=header,data=video_bd)
+     response = requests.post('https://ocean.shuqireader.com/api/ad/v1/api/prize/lottery',headers=header,data=video_bd,verify=False)
      Res=response.json()
      print(Res['message'])
      
@@ -120,11 +123,12 @@ def with_():
    try:
      msg=''
 
-     response = requests.post('https://ocean.shuqireader.com/api/activity/xapi/gold/withdraw/info',headers=header,data=with_bd)
+     response = requests.post('https://ocean.shuqireader.com/api/activity/xapi/gold/withdraw/info',headers=header,data=with_bd,verify=False)
      Res=response.json()
      print(Res['message'])
+     #print(Res)
      if Res['status']=='200':
-        msg=f'''{Res['data']['withdrawableCash']}|{Res['data']['gold']}'''
+        msg=f'''{Res['data']['phone']}|{Res['data']['withdrawableCash']}|{Res['data']['gold']}'''
      loger(msg)
    except Exception as e:
       msg=str(e)
@@ -136,7 +140,7 @@ def bubble():
    try:
      msg=''
 
-     response = requests.post('https://ocean.shuqireader.com/api/prizecenter/xapi/prize/bubble/info',headers=header,data=bubble_bd)
+     response = requests.post('https://ocean.shuqireader.com/api/prizecenter/xapi/prize/bubble/info',headers=header,data=bubble_bd,verify=False)
      Res=response.json()
      print(Res)
      if Res['status']=='200':
@@ -155,8 +159,7 @@ def Prisecenter():
    print('\n Prisecenter')
    try:
      msg=''
-     sbd=f'''&activityId=232&userId={userId}&sign=809011b55f94797d7ffd0482c48d1480&key=sq_h5_gateway&{with_bd[with_bd.find('_public='):len(with_bd)]}'''
-     response = requests.get(f'''https://ocean.shuqireader.com/api/activity/xapi/gold/amount?{sbd}''',headers=header)
+     response = requests.get(f'''https://ocean.shuqireader.com/api/activity/xapi/gold/amount?{amount_bd}''',headers=header,verify=False)
      Res=response.json()
      print(Res['message'])
      if Res['status']=='200':
@@ -232,7 +235,7 @@ def fun(h):
    return aar
 @clock
 def start():
-   global result,video_bd,sign_bd,draw_bd,with_bd,tm_bd,yuan1_bd,userId,bubble_bd
+   global result,video_bd,sign_bd,draw_bd,with_bd,tm_bd,yuan1_bd,userId,bubble_bd,amount_bd
    print('Localtime',datetime.now(tz=tz.gettz('Asia/Shanghai')).strftime("%Y-%m-%d %H:%M:%S", ))
    watch('SHUQI_SIGN_BODY',sign_bdlist)
    watch('SHUQI_VIDEO_BODY',video_bdlist)
@@ -240,6 +243,8 @@ def start():
    watch('SHUQI_WITH_BODY',with_bdlist)
    watch('SHUQI_BUBBLE_BODY',bubble_bdlist)
    watch('SHUQI_USER',IDARY)
+   watch('SHUQI_AMOUNT_BODY',amount_bdlist)
+   
    print('=======')
    for i in range(len(video_bdlist)):
      print(f'【{i+1}】')
@@ -248,6 +253,7 @@ def start():
      video_bd=video_bdlist[i]
      draw_bd=draw_bdlist[i]
      with_bd=with_bdlist[i]
+     amount_bd=amount_bdlist[i]
      bubble_bd=bubble_bdlist[i]
      userId=fun(IDARY[0])[i]
      spring_earn()
