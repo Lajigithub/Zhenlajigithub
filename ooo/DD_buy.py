@@ -205,6 +205,7 @@ def check(flag,cookiesList):
      tele_notice= os.environ["TELE_NOTICE_1"]
    if "TELE_NOTICE_1" in osenviron:
      tele_notice= osenviron["TELE_NOTICE_1"]
+   print('reading....++')
    if flag in os.environ:
      djj_djj_cookie = os.environ[flag]
    if flag in osenviron:
