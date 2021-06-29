@@ -25,4 +25,4 @@ jobs:
             TELE_NOTICE_1: ${{ secrets.TELE_NOTICE_1 }}
             DD_SECRET: ${{ secrets.DD_SECRET }}
             DD_URL: ${{ secrets.DD_URL }}
-            
+            DD_COOKIE: ${{ secrets.DD_COOKIE }}
