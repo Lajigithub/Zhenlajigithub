@@ -28,6 +28,8 @@ jdNotify=True
 #===========::::::#===========::::::
 
 
+
+
 headers={"Accept": "*/*","Accept-Encoding": "gzip, deflate, br","Accept-Language": "zh-cn","User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 xzone/9.30.0 station_id/5f8972e364c4190001d7d4a2"}
 userTasks=[]
 DD_SECRET=''
@@ -131,7 +133,8 @@ def dotask():
      if buttonStatus=='TO_ACHIEVE':
        task_achieve(taskCode)
      if buttonStatus=='TO_REWARD':
-       task_reward(userTaskLogId)
+       if userTaskLogId:
+         task_reward(userTaskLogId)
      #if buttonStatus=='WAITING_REWARD':
        #task_reward(userTaskLogId)
        
