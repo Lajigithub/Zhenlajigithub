@@ -1,0 +1,30 @@
+name: A_白菜4号
+
+on:
+  schedule:
+    - cron: '15 */2 * * *'
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: 'Set up Python'
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+         
+      - name: 'Install requirements'
+        run: pip install -r ./ooo/C.TXT 
+        
+      - name: 'AC' 
+        run: python3 ./ooo/BAICAI-4.py 
+        env:
+            bd_hd: ${{ secrets.bd_hd }}
+            bd_ck4: ${{ secrets.bd_ck4 }}
+            bd_bd: ${{ secrets.bd_bd }}
+            bd_task: ${{ secrets.bd_task }}
+            bd_url: ${{ secrets.bd_url }}
+            TELE_NOTICE_1: ${{ secrets.TELE_NOTICE_1 }}
