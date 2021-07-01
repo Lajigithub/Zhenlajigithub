@@ -385,7 +385,7 @@ def pushmsg(title,txt):
 def start():
    global hd,Card_telegram
    print('Localtime',datetime.now(tz=tz.gettz('Asia/Shanghai')).strftime("%Y-%m-%d %H:%M:%S", ))
-   #watch('Card_telegram',telelist)
+   watch('Card_telegram',telelist)
    watch('choujiang_url',urllist)
    watch('choujiang_hd',hdlist)
    print('========begin=======')
