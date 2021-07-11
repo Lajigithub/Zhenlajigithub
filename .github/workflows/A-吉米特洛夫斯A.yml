@@ -1,0 +1,27 @@
+name: A-吉米特洛夫斯基
+on:
+  schedule:
+    - cron: '0 2,3 * * *'
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: 'Set up Python'
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+         
+      - name: 'Install requirements'
+        run: pip install -r ./ooo/C.TXT
+        
+      - name: '-' 
+        run: python3 ./ooo/Jimisign.py
+        env:
+            Card_telegram: ${{ secrets.Card_telegram }}
+            jimi_cookies: ${{ secrets.jimi_cookies }}
+            jimi_signcookies: ${{ secrets.jimi_signcookies }}
+            jimi_signbody: ${{ secrets.jimi_signbody }}
